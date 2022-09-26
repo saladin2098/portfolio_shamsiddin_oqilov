@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<body class="theme-red">
+  
+  <!-- Back to top button -->
+  <div class="btn-back_to_top">
+    <span class="ti-arrow-up"></span>
+  </div>
+  
+  <!-- Setting button -->
+  <div class="config">
+    <div class="template-config">
+      <!-- Settings -->
+      <div class="d-block">
+        <button class="btn btn-fab btn-sm" id="sideel" title="Settings"><span class="ti-settings"></span></button>
+      </div>
+      <!-- Puschase -->
+      <div class="d-block">
+        <a href="https://macodeid.com/projects/virtual-folio/" class="btn btn-fab btn-sm" title="Get this template" data-toggle="tooltip" data-placement="left"><span class="ti-download"></span></a>
+      </div>
+      <!-- Help -->
+      <div class="d-block">
+        <a href="#" class="btn btn-fab btn-sm" title="Help" data-toggle="tooltip" data-placement="left"><span class="ti-help"></span></a>
+      </div>
+    </div>
+    <div class="set-menu">
+      <p>Select Color</p>
+      <div class="color-bar" data-toggle="selected">
+        <span class="color-item bg-theme-red selected" data-class="theme-red"></span>
+        <span class="color-item bg-theme-blue" data-class="theme-blue"></span>
+        <span class="color-item bg-theme-green" data-class="theme-green"></span>
+        <span class="color-item bg-theme-orange" data-class="theme-orange"></span>
+        <span class="color-item bg-theme-purple" data-class="theme-purple"></span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Navbar -->
+  <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a href="{% url 'home' %}" class="navbar-brand"><span class="icon ti-arrow-left"></span>
+        <span class="caption">Back</span></a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#main-navbar" aria-expanded="true">
+        <span class="ti-menu"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="main-navbar">
+
+
+      </div>
+    </div>
+  </div> <!-- End Navbar -->
+  
+  <div class="vg-page page-blog">
+    <div class="container">
+      <div class="row widget-grid">
+        <div class="col-lg-8">
+          <div class="input-group py-2">
+            <form method="POST">
+              {% csrf_token %}
+              <input  id="search_here" name='search_input' type="text" class="form-control" placeholder="Search here">
+              <button type='submit' style="type:button; color:black; margin-top: 15px;">Search</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="d-flex py-2 mx-n2">
+            <div class="input-group px-2">
+              <select class="vg-select">
+                <option value="">Category</option>
+                {% for post_category in post_categories %}
+                  <option><a href="#">{{ post_category.title }}</a></option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-group px-2">
+              <select class="vg-select">
+                <option value="">Sort By</option>
+                <option value="cat-1">Newest</option>
+                <option value="cat-2">Popular</option>
+                <option value="cat-3">Recommended</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row post-grid">
+
+          {% for post in posts %}
+            <div class="card">
+              <div class="img-place">
+                <img src="{{ post.image.url }}" alt="">
+              </div>
+              <div class="caption">
+                <a href="javascript:void(0)" class="post-category">{{ post.category }}</a>
+                <a href="{% url 'inside-post' pk=post.id %}" class="post-title">{{ post.title }}</a>
+                <span class="post-date"><span class="sr-only">Published on</span> {{ post.created_at }}   | <span  class="icon ti-eye" style="color: black"></span> {{ post.get_total_views }}</span>
+              </div>
+            </div>
+          {% endfor %}
+          
+        {% comment %} <div class="col-md-6 col-lg-4">
+          <div class="card">
+            <div class="img-place">
+              <img src="{% static 'assets/img/work/work-4.jpg' %}" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Business</a>
+              <a href="#" class="post-title">Announcing a plan for small teams</a>
+              <span class="post-date"><span class="sr-only">Published on</span> May 22, 2018</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="img-place">
+              <img src="{% static 'assets/img/work/work-5.jpg' %}" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Technology</a>
+              <a href="#" class="post-title">Invision design forward fund</a>
+              <span class="post-date"><span class="sr-only">Published on</span> May 22, 2018</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="img-place">
+              <img src="{% static 'assets/img/work/work-6.jpg' %}" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Business</a>
+              <a href="#" class="post-title">Announcing a plan for small teams</a>
+              <span class="post-date"><span class="sr-only">Published on</span> May 22, 2018</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card">
+            <div class="img-place">
+              <img src="{% static 'assets/img/work/work-7.jpg' %}" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Design</a>
+              <a href="#" class="post-title">5 basic tips for illustrating</a>
+              <span class="post-date"><span class="sr-only">Published on</span> May 22, 2018</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="img-place">
+              <img src="{% static 'assets/img/work/work-8.jpg' %}" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Business</a>
+              <a href="#" class="post-title">Announcing a plan for small teams</a>
+              <span class="post-date"><span class="sr-only">Published on</span> May 22, 2018</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="img-place">
+              <img src="{% static 'assets/img/work/work-9.jpg' %}" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Technology</a>
+              <a href="#" class="post-title">Invision design forward fund</a>
+              <span class="post-date"><span class="sr-only">Published on</span> May 22, 2018</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 py-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a href="" class="page-link">Prev</a>
+            </li>
+            <li class="page-item active">
+              <a href="" class="page-link">1</a>
+            </li>
+            <li class="page-item">
+              <a href="" class="page-link">2</a>
+            </li>
+            <li class="page-item">
+              <a href="" class="page-link">3</a>
+            </li>
+            <li class="page-item">
+              <a href="" class="page-link">Next</a>
+            </li>
+          </ul>
+        </div> {% endcomment %}
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  {% include 'footer.html' %} <!-- End footer -->
+  
+{% endblock content %}
+
+<!--{% block script %}
+<script>
+  const data = '{{qs_json}}'
+  console.log(data)
+  const rdata = JSON.parse(data.replace(/&quot;/g, '"'))
+  console.log(rdata)
+
+  const input = document.getElementById('search_here')
+  console.log('input: ', input)
+
+  let filteredArr = []
+  input.addEventListener('keyup', (e)=> {
+      box.innerHTML = ""
+      filteredArr = rdata.filter(info=> info['title'].includes(e.target.value))
+      if (filteredArr.length > 0) {
+          filteredArr.map(info=>{
+              box.innerHTML += `<b>${info['title']}</b><br>`
+          })
+      }
+      console.log(filteredArr)
+  })
+  {% comment %} info['title'].includes(e.target.value) {% endcomment %}
+</script>
+{% endblock script %}
+-->
